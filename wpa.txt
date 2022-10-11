@@ -1,0 +1,7 @@
+country=US
+ctrl_interface=DIR=/var/run/wpa_supplicant GROUP=netdev
+network={
+    ssid="Telcel-HUAWEI_DRSA_PJS7"
+    psk="LFJS5AS1FFQE"
+    key_mgmt=WPA-PSK
+}

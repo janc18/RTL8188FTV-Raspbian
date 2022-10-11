@@ -1,0 +1,4 @@
+allow-hotplug <nombre de interfaz>
+iface <nombre de interfaz> inet manual
+wpa-conf /etc/wpa_supplicant/wpa_supplicant.conf
+ 
