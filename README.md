@@ -13,15 +13,22 @@ se ocupan varios paquetes como lo son:
 
 ## Proceso a ejecutar en la computadora linux con acceso a internet
 Paquetes necesarios
+
 `sudo apt install wget git`
+
 Darle permisos al script de descargas
+
 `sudo chmod +x Descargas.sh`
+
 `./Descargas.sh`
+
 Copiar la nueva carpeta generada "DescargasDePaquetes" a una memoría USB
 
 ## Proceso a ejecutar en la Raspberry Pi
 Entrar a la carpeta DescargasDePaquetes y ejecutar:
+
 `sudo chmod +x Instalador.sh`
+
 `./Instalador.sh`
 
 * Ahora ya debería posible ejecutar la herramienta de Raspbian para conectarte a la red
