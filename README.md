@@ -11,7 +11,11 @@ se ocupan varios paquetes como lo son:
 
 3. linux-headers
 
-## Proceso a ejecutar en la computadora linux con acceso a internet
+## NOTA:Si cuentas con conexión a internet, descarga los paquetes directamente y omite el paso número 1
+
+`sudo apt install raspberrypi-kernel-headers build-essential dkms`
+
+## 1.Proceso a ejecutar en la computadora linux con acceso a internet
 Paquetes necesarios
 
 `sudo apt install wget git`
@@ -24,7 +28,7 @@ Darle permisos al script de descargas
 
 Copiar la nueva carpeta generada "DescargasDePaquetes" a una memoría USB
 
-## Proceso a ejecutar en la Raspberry Pi
+## 2.Proceso a ejecutar en la Raspberry Pi
 Entrar a la carpeta DescargasDePaquetes y ejecutar:
 
 `sudo chmod +x Instalador.sh`
