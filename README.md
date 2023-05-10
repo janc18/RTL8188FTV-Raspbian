@@ -1,4 +1,12 @@
 # Guía para instalar el driver(RTL8188FTV) en Raspbian
+
+## Nota: Para usar este driver, como es mencionado en el repositorio del driver, este solo tiene soporte para el kernel 4.15.x ~ 6.0.x
+
+- Por ende, si es descargada la versión más actual de Raspbian no será posible usar este driver
+
+
+## Pasos a seguir
+
 * Esta guía tiene como objetivo instalar el driver, pero en casos cuando no es posible conectarla
 usando un cable LAN.
 
