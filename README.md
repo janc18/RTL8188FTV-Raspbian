@@ -19,30 +19,72 @@ se ocupan varios paquetes como lo son:
 
 3. linux-headers
 
-## NOTA:Si cuentas con conexión a internet, descarga los paquetes directamente y omite el paso número 1
 
-`sudo apt install raspberrypi-kernel-headers build-essential dkms`
+## 1.En la computadora con internet
 
-## 1.Proceso a ejecutar en la computadora linux con acceso a internet
-Paquetes necesarios
+1. Se descarga el repositorio con el driver:
 
-`sudo apt install wget git`
+```sh
+git clone https://github.com/kelebek333/rtl8188fu/
+```
 
-Darle permisos al script de descargas
-
-`sudo chmod +x Descargas.sh`
-
-`./Descargas.sh`
-
-Copiar la nueva carpeta generada "DescargasDePaquetes" a una memoría USB
+2. Se pasa esta carpeta actual a una memoria USB
 
 ## 2.Proceso a ejecutar en la Raspberry Pi
-Entrar a la carpeta DescargasDePaquetes y ejecutar:
 
-`sudo chmod +x Instalador.sh`
 
-`./Instalador.sh`
+1. Se monta la memoria USB 
 
-* Ahora ya debería posible ejecutar la herramienta de Raspbian para conectarte a la red
-`sudo raspi-config `System Options` -> `Wireless LAN`
+2. Ejecutar el instalador en la carpeta del repositorio (RTL8188FTV-Raspbian) 
+
+```sh
+python3.9 Instalador_python.py
+```
+3. Elegir la opcion r o R (opción correspondiente a la Raspberry pi)
+	Se generara un archivo txt automático con las urls de los paquetes 
+
+4. Se desmonta la memoria
+
+
+## 3.Proceso a ejecutar en la computadora linux con acceso a internet
+
+1. Se monta de nuevo la memoria
+
+2. Se navega al repositorio (RTL8188FTV-Raspbian)
+
+3. Ejecutar el instalador
+
+```sh
+python3.9 Instalador_python.py
+```
+
+4. Elegir la opcion p o P (opción correspondiente a la PC)
+	Esto descargara los paquetes necesarios en la carpeta "Descagas_de_paquetes"
+
+5. Se mueven la carpeta rtl8188fu-arm (esta se genero al realizar el paso uno)
+```sh
+mv rtl** Descagas_de_paquetes
+```
+6. Desmontar la memoria
+
+## 4. Instalacion en la Raspberry pi
+
+1. Se monta la memoria en la Raspberry pi
+
+2. Se navega al repositorio (RTL8188FTV-Raspbian)
+
+3. Se mueve el archivo "Instalador.sh" a la carpeta de Descagas_de_paquetes
+
+```sh
+mv Instalador.sh Descagas_de_paquetes
+```
+
+4. Se le da permisos de ejecucion al instalador
+
+```sh
+chmod +x Instalador.sh
+./Instalador.sh
+```
+
+### Si existe cualquier problema no dudes en crear un issue
 
