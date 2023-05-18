@@ -7,11 +7,14 @@ paquetes
 """
 import hashlib
 import subprocess
+import os
+import shutil
 
 paquetes_requeridos=["build-essential","dkms","raspberry-kernel-headers"]
 links_de_paquetes=[]
 uris_de_paquetes=[]
 ruta_de_archivo_con_links="archivos_links.txt"
+ruta_de_carpeta_de_descargas="Descargas_de_paquetes"
 # Preguntarle al usuario si se encuentra en la Raspberry pi o en la Pc
 
 host=input("¿En donde se encuentras en la Pc o en la Raspberry pi?\n"
@@ -89,7 +92,18 @@ def verificando_integridad_sha256(lista_formateada):
         else:
             print("Error en la comprobacion")
 
-    
+
+def mover_descargas(directorio_origen,carpeta_destino):
+    print("Moviendo archivos .deb")
+    os.makedirs(carpeta_destino, exist_ok=True)
+
+    for nombre_archivo in os.listdir(directorio_origen):
+        ruta_archivo = os.path.join(directorio_origen, nombre_archivo)
+
+        if nombre_archivo.endswith('.deb') and os.path.isfile(ruta_archivo):
+            archivo_destino = os.path.join(carpeta_destino, nombre_archivo)
+            shutil.move(ruta_archivo, archivo_destino)
+
 def ejecutar_opcion(opcion):
     if opcion in ('R','r'):
         obtener_links_de_descargas()
@@ -97,4 +111,6 @@ def ejecutar_opcion(opcion):
         lista_formateada=formatear_archivo_links()
         descargar_archivos_deb(lista_formateada)
         verificando_integridad_sha256(lista_formateada)
+        mover_descargas(".",ruta_de_carpeta_de_descargas)
+
 ejecutar_opcion(host)
