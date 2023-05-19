@@ -25,7 +25,7 @@ se ocupan varios paquetes como lo son:
 1. Se descarga el repositorio con el driver:
 
 ```sh
-git clone https://github.com/kelebek333/rtl8188fu/
+git clone -b arm https://github.com/kelebek333/rtl8188fu rtl8188fu-arm
 ```
 
 2. Se pasa esta carpeta actual a una memoria USB
