@@ -10,7 +10,7 @@ import subprocess
 import os
 import shutil
 
-paquetes_requeridos=["build-essential","dkms","raspberry-kernel-headers"]
+paquetes_requeridos=["build-essential","dkms","raspberrypi-kernel-headers"]
 links_de_paquetes=[]
 uris_de_paquetes=[]
 ruta_de_archivo_con_links="archivos_links.txt"
