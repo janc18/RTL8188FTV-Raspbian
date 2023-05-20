@@ -21,6 +21,11 @@ se ocupan varios paquetes como lo son:
 
 3. linux-headers
 
+## Depencias necesarias en la computadora con linux con acceso a internet
+
+- Git
+- Wget
+- python
 
 ## 1.En la computadora con internet
 
@@ -29,8 +34,20 @@ se ocupan varios paquetes como lo son:
 ```sh
 git clone -b arm https://github.com/kelebek333/rtl8188fu rtl8188fu-arm
 ```
+2. Se descarga este repositorio
 
-2. Se pasa esta carpeta actual a una memoria USB
+```sh
+git clone https://github.com/janc18/RTL8188FTV-Raspbian
+```
+3. Mueve la carpeta rtl18188fu-arm generada por el paso 1 a RLL8188FTV-Raspbian 
+
+En el directorio donde ejecutaste el paso 1 y 2 ejecutas lo siguiente
+
+```sh
+mv rtl18188fu-arm -r RTL8188FTV-Raspbian
+```
+
+1. Se pasa esta carpeta actual (RTL8188FTV-Raspbian) a una memoria USB
 
 ## 2.Proceso a ejecutar en la Raspberry Pi
 
@@ -65,7 +82,7 @@ python3.9 Instalador_python.py
 
 5. Se mueven la carpeta rtl8188fu-arm (esta se genero al realizar el paso uno)
 ```sh
-mv rtl** Descagas_de_paquetes
+mv -r rtl** Descagas_de_paquetes
 ```
 6. Desmontar la memoria
 
