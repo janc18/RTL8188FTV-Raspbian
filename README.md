@@ -44,7 +44,7 @@ git clone https://github.com/janc18/RTL8188FTV-Raspbian
 En el directorio donde ejecutaste el paso 1 y 2 ejecutas lo siguiente
 
 ```sh
-mv rtl18188fu-arm -r RTL8188FTV-Raspbian
+mv rtl18188fu-arm RTL8188FTV-Raspbian
 ```
 
 1. Se pasa esta carpeta actual (RTL8188FTV-Raspbian) a una memoria USB
@@ -82,7 +82,7 @@ python3.9 Instalador_python.py
 
 5. Se mueven la carpeta rtl8188fu-arm (esta se genero al realizar el paso uno)
 ```sh
-mv -r rtl** Descagas_de_paquetes
+mv rtl** Descagas_de_paquetes
 ```
 6. Desmontar la memoria
 
