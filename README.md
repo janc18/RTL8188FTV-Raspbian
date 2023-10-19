@@ -78,11 +78,11 @@ python3.9 Instalador_python.py
 ```
 
 4. Elegir la opcion p o P (opción correspondiente a la PC)
-	Esto descargara los paquetes necesarios en la carpeta "Descagas_de_paquetes"
+	Esto descargara los paquetes necesarios en la carpeta "Descargas_de_paquetes"
 
 5. Se mueven la carpeta rtl8188fu-arm (esta se genero al realizar el paso uno)
 ```sh
-mv rtl** Descagas_de_paquetes
+mv rtl** Descargas_de_paquetes
 ```
 6. Desmontar la memoria
 
@@ -135,5 +135,11 @@ sudo apt-mark hold raspberrypi-kernel
 sudo apt-mark hold raspberrypi-kernel-headers
 ```
 
-### Si existe cualquier problema no dudes en crear un issue
+### Si existe cualquier problema no dudes en crear un Issue
 
+Mejoras de script de Python
+
+- Detección automatica de donde se ejecuta el script Raspberry Pi o PC 
+- Verificar si la PC se encuentra con internet
+- Verificar al final si la instalación del driver fue correcta
+- Mostrar con colores un informacion del host siempre que se ejecute
