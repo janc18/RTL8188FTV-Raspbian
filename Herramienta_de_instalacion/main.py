@@ -9,8 +9,9 @@ import hashlib
 import subprocess
 import os
 import shutil
-import descargador
 import mostrar_informacion as st
+import descargador as dw
+
 paquetes_requeridos=["build-essential","dkms","raspberrypi-kernel-headers"]
 links_de_paquetes=[]
 uris_de_paquetes=[]
@@ -54,7 +55,7 @@ def obtener_links_de_descargas():
                 archivo.write(datos_de_paquetes.stdout)
             archivo.close
     except FileNotFoundError:
-        print("No se encotro el archivo")
+        print("No se encontro el archivo")
 
 def comparar_sha256(ruta):
     sha256 = hashlib.sha256()
@@ -75,7 +76,7 @@ def formatear_archivo_links():
                 linea_sin_n=linea_sin_n.split()
                 lista_formateada.append(linea_sin_n)
         archivo.close
-        print("Formateando archivo para su proceso")
+        print("Formateando archivo con URL para descargar los paquetes deb")
 
         return lista_formateada
     except FileNotFoundError:
@@ -85,25 +86,14 @@ def verificando_integridad_sha256(lista_formateada):
     #sha256_paquete=""
     sha256_paquete_txt=""
     for paquete in lista_formateada:
-        print("Verificando el paquete",paquete[1])
+        print("Verificando el paquete",paquete[1],end='')
         sha256_paquete_txt=paquete[3]
         sha256_paquete_txt=sha256_paquete_txt.replace("SHA256:","")
         if sha256_paquete_txt==comparar_sha256(paquete[1]):
-            print("Comprobacion exitosa de ",paquete[1])
+            print(st.VERDE + " OK"+st.NORMAL)
         else:
-            print("Error en la comprobacion")
+            print(st.ROJO+" ERROR"+st.NORMAL)
 
-
-def mover_descargas(directorio_origen,carpeta_destino):
-    print("Moviendo archivos .deb")
-    os.makedirs(carpeta_destino, exist_ok=True)
-
-    for nombre_archivo in os.listdir(directorio_origen):
-        ruta_archivo = os.path.join(directorio_origen, nombre_archivo)
-
-        if nombre_archivo.endswith('.deb') and os.path.isfile(ruta_archivo):
-            archivo_destino = os.path.join(carpeta_destino, nombre_archivo)
-            shutil.move(ruta_archivo, archivo_destino)
 
 def ejecutar_opcion(opcion):
     if opcion in ('R','r'):
@@ -113,16 +103,14 @@ def ejecutar_opcion(opcion):
         descargar_archivos_deb(lista_formateada)
         verificando_integridad_sha256(lista_formateada)
         mover_descargas(".",ruta_de_carpeta_de_descargas)
-#ejecutar_opcion(host)
 
-def ejecutar_comando(comando):
-    lista=[]
-    lista=comando.split()
-#    output=subprocess.run(lista,capture_output=False,shell=True)
-    output=subprocess.run(lista)
-    return output
-
-
-
-st.mostrar_informacion_host()
+#st.mostrar_informacion_host()
+"""
+lista_formateada=formatear_archivo_links()
+dw.descargar_archivos_deb_con_requests(lista_formateada)
+verificando_integridad_sha256(lista_formateada)
+dw.mover_descargas_deb_a_directorio(".",ruta_de_carpeta_de_descargas)
+dw.verificando_existencia_de_paquetes("Descargas_de_paquetes")
+"""
+dw.verificando_existencia_de_archivo(ruta_de_archivo_con_links)
 #print(ejecutar_comando("ls .."))
