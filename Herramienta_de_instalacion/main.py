@@ -40,6 +40,10 @@ def descargar_archivos_deb(matriz_de_links):
         subprocess.run(parametros_wget,capture_output=True)
         print("Descarga de paquete",nombre_archivo,"completa",)
 
+def limpiar_terminal():
+    clear = lambda : os.system('tput reset')
+    clear()
+
 # Si te encuentras en la pc verifica si existe el archivo de texto con los links de 
 # descarga de los paquetes requeridos 
 def obtener_links_de_descargas():
@@ -111,6 +115,8 @@ dw.descargar_archivos_deb_con_requests(lista_formateada)
 verificando_integridad_sha256(lista_formateada)
 dw.mover_descargas_deb_a_directorio(".",ruta_de_carpeta_de_descargas)
 dw.verificando_existencia_de_paquetes("Descargas_de_paquetes")
-"""
 dw.verificando_existencia_de_archivo(ruta_de_archivo_con_links)
+"""
+limpiar_terminal()
+status=st.mostrar_informacion_host()
 #print(ejecutar_comando("ls .."))
