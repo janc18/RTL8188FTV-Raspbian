@@ -24,10 +24,26 @@ def verificar_si_el_programa_esta_instalado(programa):
         print(VERDE+"El Programa " + programa + " esta instalado"+NORMAL)
         return True
 
+def obtener_links_de_descargas():
+    print("Obteniendo links de descarga de los siguientes paquetes:",paquetes_requeridos)
+    
+    try:
+        with open(ruta_de_archivo_con_links,'w') as archivo:
+
+            for paquetes in paquetes_requeridos: 
+                parametros_apt=["apt-get","download","--print-uris",paquetes]
+                print(parametros_apt)
+                datos_de_paquetes=subprocess.run(parametros_apt,capture_output=True,text=True)
+                archivo.write(datos_de_paquetes.stdout)
+            archivo.close
+    except FileNotFoundError:
+        print("No se encontro el archivo")
+    
 def verificar_arquitectura():
     arquitectura=os.uname()[4]
     print(AZUL+"La arquitectura del host es " + arquitectura +NORMAL)
-    return arquitectura
+    es_arm=str(arquitectura).__contains__("arm")
+    return es_arm
 
 def verificar_kernel_compatible():
     kernel=os.uname()[2]
@@ -66,17 +82,17 @@ def mostrar_informacion_host():
     status={}
     print(BOLD+"---Mostrando información del host---"+NORMAL)
     status[0]=verificar_arquitectura()
-    verificar_kernel_compatible()
+    status[1]=verificar_kernel_compatible()
     print(BOLD+"----Verificando dependencias---------"+NORMAL)
-    status[1]=verificar_si_el_programa_esta_instalado("git")
-    status[2]=verificar_si_el_programa_esta_instalado("apt-get")
+    status[2]=verificar_si_el_programa_esta_instalado("git")
+    status[3]=verificar_si_el_programa_esta_instalado("apt-get")
     print(BOLD+"----Comprobando conexión a Internet---------"+NORMAL)
-    status[3]=verificar_conexion_a_internet()
+    status[4]=verificar_conexion_a_internet()
     print("-------------------------------------")
     print(BOLD+"-----Verificando si existen paquetes previamente descargados-------"+NORMAL)
-    status[4]=dw.verificando_existencia_de_paquetes("Descargas_de_paquetes")
+    status[5]=dw.verificando_existencia_de_paquetes("Descargas_de_paquetes")
     print(BOLD+"-----Verificando si existe archivo con la ruta de descarga de los paquetes------"+NORMAL)
-    status[5]=dw.verificando_existencia_de_archivo("archivos_links.txt")
+    status[6]=dw.verificando_existencia_de_archivo("archivos_links.txt")
     print(BOLD+"-----Verificando si ya se encuentra descargado el repositorio git-----"+NORMAL)
-    status[6]=dw.existe_repositorio_git_driver()
+    status[7]=dw.existe_repositorio_git_driver()
     return status
