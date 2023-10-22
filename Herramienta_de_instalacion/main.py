@@ -11,6 +11,7 @@ import os
 import shutil
 import mostrar_informacion as st
 import descargador as dw
+import analisis as an
 
 paquetes_requeridos=["build-essential","dkms","raspberrypi-kernel-headers"]
 links_de_paquetes=[]
@@ -29,23 +30,13 @@ if host not in ('R','P','r','p'):
     exit()
 
 """
-def descargar_archivos_deb(matriz_de_links):
-    print("Estos son los paquetes que se descargaran")
-    for paquetes in matriz_de_links:
-        print(paquetes[1])
-
-    for paquetes in matriz_de_links:
-        nombre_archivo=paquetes[1]
-        parametros_wget=["wget","--no-check-certificate",paquetes[0],"-O",nombre_archivo]
-        subprocess.run(parametros_wget,capture_output=True)
-        print("Descarga de paquete",nombre_archivo,"completa",)
-
 def limpiar_terminal():
     clear = lambda : os.system('tput reset')
     clear()
 
 # Si te encuentras en la pc verifica si existe el archivo de texto con los links de 
 # descarga de los paquetes requeridos 
+"""
 def obtener_links_de_descargas():
     print("Obteniendo links de descarga de los siguientes paquetes:",paquetes_requeridos)
     
@@ -60,6 +51,7 @@ def obtener_links_de_descargas():
             archivo.close
     except FileNotFoundError:
         print("No se encontro el archivo")
+"""
 
 def comparar_sha256(ruta):
     sha256 = hashlib.sha256()
@@ -87,7 +79,6 @@ def formatear_archivo_links():
         print("No se encontro el archivo")
 
 def verificando_integridad_sha256(lista_formateada):
-    #sha256_paquete=""
     sha256_paquete_txt=""
     for paquete in lista_formateada:
         print("Verificando el paquete",paquete[1],end='')
@@ -119,4 +110,6 @@ dw.verificando_existencia_de_archivo(ruta_de_archivo_con_links)
 """
 limpiar_terminal()
 status=st.mostrar_informacion_host()
+print(st.BOLD+"Iniciando Analisis para ejecutar el procedimiento adecuado"+st.NORMAL)
+an.generar_txt_con_uris_de_paquetes(status)
 #print(ejecutar_comando("ls .."))
