@@ -11,11 +11,15 @@ import os
 import socket
 import shutil
 import descargador as dw
+import subprocess
 BOLD="\033[1m"
 NORMAL="\033[0m"
 VERDE="\033[92m"
 ROJO="\033[91m"
 AZUL="\033[94m"
+paquetes_requeridos=["build-essential","dkms","raspberrypi-kernel-headers"]
+ruta_de_archivo_con_links="archivos_links.txt"
+
 def verificar_si_el_programa_esta_instalado(programa):
     if(shutil.which(programa)==None):
         print(ROJO+"El Programa " + programa + " no esta instalado"+NORMAL)
@@ -36,6 +40,10 @@ def obtener_links_de_descargas():
                 datos_de_paquetes=subprocess.run(parametros_apt,capture_output=True,text=True)
                 archivo.write(datos_de_paquetes.stdout)
             archivo.close
+        print(VERDE+BOLD) 
+        print("Archivo con los links generados")
+        print("Ahora puedes ejecutar el script en la PC con acceso a internet")
+        print(NORMAL)
     except FileNotFoundError:
         print("No se encontro el archivo")
     
@@ -52,10 +60,10 @@ def verificar_kernel_compatible():
     kernel_version_mayor=int(kernel[0])
     kernel_version_menor=int(kernel[1])
     if (kernel_version_mayor>=4 or kernel_version_mayor<=6) or (kernel_version_mayor==6 and kernel_version_menor==0):
-        print(VERDE+"La versión del kernel si es compatible"+NORMAL)
+        print(VERDE+"La versión del kernel si es compatible con el driver"+NORMAL)
         return True
     else:
-        print(ROJO+"La versión del kernel no es compatible"+NORMAL)
+        print(ROJO+"La versión del kernel no es compatible con el driver"+NORMAL)
         return False
 
 def esta_conectado_a_internet():
@@ -79,20 +87,28 @@ def verificar_conexion_a_internet():
         return False
 
 def mostrar_informacion_host():
-    status={}
+    status={"arquitectura":False,
+            "kernel_compatible":False,
+            "existe_git":False,
+            "existe_apt":False,
+            "existe_conexion_internet":False,
+            "existe_paquetes_descargados":False,
+            "existe_archivos_links":False,
+            "existe_repositorio_driver":False
+    }
     print(BOLD+"---Mostrando información del host---"+NORMAL)
-    status[0]=verificar_arquitectura()
-    status[1]=verificar_kernel_compatible()
+    status["arquitectura"]=verificar_arquitectura()
+    status["kernel_compatible"]=verificar_kernel_compatible()
     print(BOLD+"----Verificando dependencias---------"+NORMAL)
-    status[2]=verificar_si_el_programa_esta_instalado("git")
-    status[3]=verificar_si_el_programa_esta_instalado("apt-get")
+    status["existe_git"]=verificar_si_el_programa_esta_instalado("git")
+    status["existe_apt"]=verificar_si_el_programa_esta_instalado("apt-get")
     print(BOLD+"----Comprobando conexión a Internet---------"+NORMAL)
-    status[4]=verificar_conexion_a_internet()
+    status["existe_conexion_internet"]=verificar_conexion_a_internet()
     print("-------------------------------------")
     print(BOLD+"-----Verificando si existen paquetes previamente descargados-------"+NORMAL)
-    status[5]=dw.verificando_existencia_de_paquetes("Descargas_de_paquetes")
+    status["existe_paquetes_descargados"]=dw.verificando_existencia_de_paquetes("Descargas_de_paquetes")
     print(BOLD+"-----Verificando si existe archivo con la ruta de descarga de los paquetes------"+NORMAL)
-    status[6]=dw.verificando_existencia_de_archivo("archivos_links.txt")
+    status["existe_archivos_links"]=dw.verificando_existencia_de_archivo("archivos_links.txt")
     print(BOLD+"-----Verificando si ya se encuentra descargado el repositorio git-----"+NORMAL)
-    status[7]=dw.existe_repositorio_git_driver()
+    status["existe_repositorio_driver"]=dw.existe_repositorio_git_driver()
     return status
