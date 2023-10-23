@@ -7,7 +7,10 @@ import os
 import shutil
 import subprocess
 import mostrar_informacion as sw
+import hashlib
 
+ruta_de_archivo_con_links="archivos_links.txt"
+ruta_de_carpeta_de_descargas="Descargas_de_paquetes"
 url_repositorio_git_driver="https://github.com/kelebek333/rtl8188fu"
 
 def descargar_archivos_deb_con_requests(matriz_de_links):
@@ -48,7 +51,6 @@ def verificando_existencia_de_paquetes(carpeta_paquetes_deb):
         if len(lista_de_paquetes)==0:
             print(sw.ROJO+"No se encontro ningun paquete"+sw.NORMAL)
             return False
-            #iniciar descargas
         else:
             print(sw.AZUL+sw.BOLD+"Se encontraron los siguientes paquetes "+sw.NORMAL)
             for paquete in lista_de_paquetes:
@@ -66,13 +68,13 @@ def verificando_existencia_de_archivo(ruta_de_archivo_con_links):
         return False
 
 def descargar_repositorio_git(url,status):
-    git_presente=status[1]
+    git_presente=status["existe_git"]
     if git_presente:
         print(sw.AZUL+sw.BOLD+"Descargando repositorio de driver"+sw.NORMAL)
         parametros_git=["git","clone",url]
         subprocess.run(parametros_git)
         print(sw.VERDE+"Descarga completa"+sw.NORMAL)
-    elif git_presente==False:
+    else:
         print(sw.ROJO+"No se encontro git\nCerrando script"+sw.NORMAL)
         exit()
 
@@ -86,4 +88,38 @@ def existe_repositorio_git_driver():
         print(sw.VERDE+"El repositorio ya se encuentra descargado"+sw.NORMAL)
         return True
 
-   
+def comparar_sha256(ruta):
+    sha256 = hashlib.sha256()
+    with open(ruta, 'rb') as archivo:
+        for bloque in iter(lambda: archivo.read(4096), b''):
+            sha256.update(bloque)
+    return sha256.hexdigest()
+
+
+def formatear_archivo_links():
+    lista_formateada =[]
+    
+    try:
+        with open(ruta_de_archivo_con_links,'r') as archivo:
+            for linea in archivo:
+                linea_sin_n=linea.replace("'","")
+                linea_sin_n=linea_sin_n.strip()
+                linea_sin_n=linea_sin_n.split()
+                lista_formateada.append(linea_sin_n)
+        archivo.close
+        print("Formateando archivo con URL para descargar los paquetes deb")
+
+        return lista_formateada
+    except FileNotFoundError:
+        print("No se encontro el archivo")
+
+def verificando_integridad_sha256(lista_formateada):
+    sha256_paquete_txt=""
+    for paquete in lista_formateada:
+        print("Verificando el paquete",paquete[1],end='')
+        sha256_paquete_txt=paquete[3]
+        sha256_paquete_txt=sha256_paquete_txt.replace("SHA256:","")
+        if sha256_paquete_txt==comparar_sha256(os.getcwd()+"/"+ruta_de_carpeta_de_descargas+"/"+paquete[1]):
+            print(sw.VERDE + " OK"+sw.NORMAL)
+        else:
+            print(sw.ROJO+" ERROR"+sw.NORMAL) 
