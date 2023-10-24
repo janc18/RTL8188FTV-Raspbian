@@ -12,10 +12,12 @@ import socket
 import shutil
 import descargador as dw
 import subprocess
+import mensajes as msg
 BOLD="\033[1m"
 NORMAL="\033[0m"
 VERDE="\033[92m"
 ROJO="\033[91m"
+AMARILLO="\033[93m"
 AZUL="\033[94m"
 paquetes_requeridos=["build-essential","dkms","raspberrypi-kernel-headers"]
 ruta_de_archivo_con_links="archivos_links.txt"
@@ -112,3 +114,10 @@ def mostrar_informacion_host():
     print(BOLD+"-----Verificando si ya se encuentra descargado el repositorio git-----"+NORMAL)
     status["existe_repositorio_driver"]=dw.existe_repositorio_git_driver()
     return status
+
+def mostrar_informacion_script():
+    print(AMARILLO)
+    print(msg.mensaje_bienvenida)
+    print(msg.nota_distro_compatible)
+    print(msg.version)
+    print(NORMAL)
