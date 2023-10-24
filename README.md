@@ -1,11 +1,14 @@
 # Guía para instalar el driver(RTL8188FTV) en Raspbian
 
+## Status(Estado actual del proyecto)
+
+![status](https://badgen.net/badge/Estado/Aun%20en%20desarrollo(python)/yellow)
+
 ## Pasos para instalar una versión de Raspbian compatible al final
 
 ## Nota: Para usar este driver, como es mencionado en el repositorio del driver, este solo tiene soporte para el kernel 4.15.x ~ 6.0.x
 
 - Por ende, si es descargada la versión más actual de Raspbian no será posible usar este driver
-
 
 ## Pasos a seguir
 
