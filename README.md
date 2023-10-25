@@ -2,7 +2,7 @@
 
 ## Status(Estado actual del proyecto)
 
-![status](https://badgen.net/badge/Estado/Aun%20en%20desarrollo(python)/yellow)
+![status](https://badgen.net/badge/Estado/testing/orange)
 
 ## Pasos para instalar una versión de Raspbian compatible al final
 
