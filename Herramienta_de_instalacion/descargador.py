@@ -82,7 +82,7 @@ def existe_repositorio_git_driver():
     try:
         os.makedirs("rtl8188fu",exist_ok=False)
         print(sw.ROJO+"No se encontro repositorio con el driver"+sw.NORMAL)
-        os.rmdir("rl8188fu")
+        os.rmdir("rtl8188fu")
         return False
     except FileExistsError:
         print(sw.VERDE+"El repositorio ya se encuentra descargado"+sw.NORMAL)
