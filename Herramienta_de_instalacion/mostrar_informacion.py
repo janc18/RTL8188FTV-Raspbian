@@ -110,7 +110,7 @@ def mostrar_informacion_host():
     print(BOLD+"-----Verificando si existen paquetes previamente descargados-------"+NORMAL)
     status["existe_paquetes_descargados"]=dw.verificando_existencia_de_paquetes("Descargas_de_paquetes")
     print(BOLD+"-----Verificando si existe archivo con la ruta de descarga de los paquetes------"+NORMAL)
-    status["existe_archivos_links"]=dw.verificando_existencia_de_archivo("archivos_links.txt")
+    status["existe_archivos_links"]=dw.verificando_existencia_de_archivo("archivos_links.txt","No se encontro el archivo con links")
     print(BOLD+"-----Verificando si ya se encuentra descargado el repositorio git-----"+NORMAL)
     status["existe_repositorio_driver"]=dw.existe_repositorio_git_driver()
     return status
@@ -121,3 +121,16 @@ def mostrar_informacion_script():
     print(msg.nota_distro_compatible)
     print(msg.version)
     print(NORMAL)
+
+# Cambio de rama y commit debe de ser ejecutado en el disposito que cuenta internet
+
+def cambio_de_rama_y_commit_repositorio_git(lista_resumen):
+    if lista_resumen["existe_git"] and lista_resumen["existe_repositorio_driver"]:
+        ubicacion_repositorio_rtl=os.getcwd()+"/"+"rtl8188fu"
+        print(ubicacion_repositorio_rtl)
+        subprocess.run(["git","-C",ubicacion_repositorio_rtl,"checkout","b037"])
+    else:
+        print("No se encontro el repositorio y/o no cuenta con git")
+
+# TODO: Agregar algun tipo de verificacion al repositorio del driver, por que por el 
+# momento solo verifica la existencia de la carpeta
