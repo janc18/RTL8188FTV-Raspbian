@@ -73,5 +73,13 @@ def descargar_todos_los_componentes_necesarios(lista_resumen):
         dw.descargar_archivos_deb_con_requests(lista_formateada)
         dw.mover_descargas_deb_a_directorio(".",dw.ruta_de_carpeta_de_descargas)
         dw.verificando_integridad_sha256(lista_formateada)
+    if lista_resumen["existe_archivos_links"] and lista_resumen["existe_paquetes_descargados"]:
+        lista_formateada=dw.formatear_archivo_links()
+        paquetes_corruptos=dw.verificando_integridad_sha256(lista_formateada)
+        if len(paquetes_corruptos)>0:
+            dw.eliminar_paquetes_deb_corruptos(paquetes_corruptos)
+            dw.descargar_archivos_deb_con_requests(paquetes_corruptos)
+            dw.mover_descargas_deb_a_directorio(".",dw.ruta_de_carpeta_de_descargas)
     if lista_resumen["existe_paquetes_descargados"] and lista_resumen["existe_repositorio_driver"]:
+        #st.cambio_de_rama_y_commit_repositorio_git(lista_resumen)
         return True
