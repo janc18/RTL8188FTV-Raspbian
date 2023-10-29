@@ -54,7 +54,7 @@ def verificando_existencia_de_paquetes(carpeta_paquetes_deb):
         else:
             print(sw.AZUL+sw.BOLD+"Se encontraron los siguientes paquetes "+sw.NORMAL)
             for paquete in lista_de_paquetes:
-                print(sw.AZUL+paquete+sw.NORMAL)
+                print(sw.AMARILLO+paquete+sw.NORMAL)
             return lista_de_paquetes
 
 
@@ -106,8 +106,6 @@ def formatear_archivo_links():
                 linea_sin_n=linea_sin_n.split()
                 lista_formateada.append(linea_sin_n)
         archivo.close
-        print("Formateando archivo con URL para descargar los paquetes deb")
-
         return lista_formateada
     except FileNotFoundError:
         print("No se encontro el archivo")
@@ -117,11 +115,10 @@ def verificando_integridad_sha256(lista_formateada):
     lista_paquete_corrupto=[]
     for paquete in lista_formateada:
         ruta_de_archivo=os.getcwd()+"/"+ruta_de_carpeta_de_descargas+"/"+paquete[1]
-        print("Verificando el paquete: " + sw.BOLD + paquete[1] + sw.NORMAL,end='')
+        print("Verificando el SUM256 del paquete: " + sw.BOLD + paquete[1] + sw.NORMAL,end='')
         sha256_paquete_txt=paquete[3]
         sha256_paquete_txt=sha256_paquete_txt.replace("SHA256:","")
         if verificando_existencia_de_archivo(ruta_de_archivo," No se encontro el paquete: "+paquete[1]):
-            print(paquete[1])
             if sha256_paquete_txt==comparar_sha256(ruta_de_archivo):
                 print(sw.VERDE + " OK"+sw.NORMAL)
             else:
