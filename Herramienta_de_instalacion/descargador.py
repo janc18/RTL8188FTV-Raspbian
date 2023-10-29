@@ -58,13 +58,12 @@ def verificando_existencia_de_paquetes(carpeta_paquetes_deb):
             return lista_de_paquetes
 
 
-def verificando_existencia_de_archivo(ruta_de_archivo_con_links):
+def verificando_existencia_de_archivo(ruta_de_archivos,mensaje_error):
     try:
-        open(ruta_de_archivo_con_links,"r")
-        print(sw.VERDE+"El archivo "+ruta_de_archivo_con_links+" se encontro"+sw.NORMAL)
+        open(ruta_de_archivos,"r")
         return True
     except FileNotFoundError:
-        print(sw.ROJO+"No existe el archivo con los links de descargas"+sw.NORMAL)
+        print(sw.ROJO+mensaje_error+sw.NORMAL)
         return False
 
 def descargar_repositorio_git(url,status):
@@ -115,11 +114,27 @@ def formatear_archivo_links():
 
 def verificando_integridad_sha256(lista_formateada):
     sha256_paquete_txt=""
+    lista_paquete_corrupto=[]
     for paquete in lista_formateada:
-        print("Verificando el paquete",paquete[1],end='')
+        ruta_de_archivo=os.getcwd()+"/"+ruta_de_carpeta_de_descargas+"/"+paquete[1]
+        print("Verificando el paquete: " + sw.BOLD + paquete[1] + sw.NORMAL,end='')
         sha256_paquete_txt=paquete[3]
         sha256_paquete_txt=sha256_paquete_txt.replace("SHA256:","")
-        if sha256_paquete_txt==comparar_sha256(os.getcwd()+"/"+ruta_de_carpeta_de_descargas+"/"+paquete[1]):
-            print(sw.VERDE + " OK"+sw.NORMAL)
+        if verificando_existencia_de_archivo(ruta_de_archivo," No se encontro el paquete: "+paquete[1]):
+            print(paquete[1])
+            if sha256_paquete_txt==comparar_sha256(ruta_de_archivo):
+                print(sw.VERDE + " OK"+sw.NORMAL)
+            else:
+                print(sw.ROJO+" ERROR"+sw.NORMAL)
+                lista_paquete_corrupto.append(paquete)           
         else:
-            print(sw.ROJO+" ERROR"+sw.NORMAL) 
+            lista_paquete_corrupto.append(paquete)           
+    return lista_paquete_corrupto
+
+def eliminar_paquetes_deb_corruptos(lista_formateada):
+    #os.remove
+    for paquete in lista_formateada:
+        ruta_de_paquete=os.getcwd() + "/"+ruta_de_carpeta_de_descargas + "/" + paquete[1]
+        if verificando_existencia_de_archivo(ruta_de_paquete,"EL paquete " + paquete[1] + " ya se encuentra eliminado"):
+            os.remove(ruta_de_paquete)
+            print(sw.AMARILLO + sw.BOLD + "Paquete corrupto eliminado: "+paquete[1] + sw.NORMAL)
