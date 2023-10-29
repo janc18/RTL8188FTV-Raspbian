@@ -113,7 +113,7 @@ def mostrar_informacion_host():
     existe_archivos_links=dw.verificando_existencia_de_archivo("archivos_links.txt","No se encontro el archivo con links")
     status["existe_archivos_links"]=existe_archivos_links
     if existe_archivos_links:
-        print(VERDE+"El archivo de texto con los links de descarga existe")
+        print(VERDE+"El archivo de texto con los links de descarga existe"+NORMAL)
     print(BOLD+"-----Verificando si ya se encuentra descargado el repositorio git-----"+NORMAL)
     status["existe_repositorio_driver"]=dw.existe_repositorio_git_driver()
     return status
