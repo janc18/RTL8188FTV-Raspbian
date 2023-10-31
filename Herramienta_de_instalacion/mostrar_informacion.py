@@ -19,7 +19,7 @@ VERDE="\033[92m"
 ROJO="\033[91m"
 AMARILLO="\033[93m"
 AZUL="\033[94m"
-paquetes_requeridos=["build-essential","dkms","raspberrypi-kernel-headers"]
+paquetes_requeridos=["build-essential","dkms","raspberrypi-kernel-headers","dctrl-tools"]
 ruta_de_archivo_con_links="archivos_links.txt"
 
 def verificar_si_el_programa_esta_instalado(programa):
