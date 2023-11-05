@@ -3,105 +3,34 @@
 ## Status(Estado actual del proyecto)
 
 ![status](https://badgen.net/badge/Estado/testing/orange)
+*Por el momento tengo problemas con obtener la version de raspberrypi-kernel-headers correspondiente con el kernel instalado,
+ya que por alguna razon se descarga la vesion 6.0, probare instalando la version mas reciente a de Raspbian*
 
 ## Pasos para instalar una versión de Raspbian compatible al final
 
 ## Nota: Para usar este driver, como es mencionado en el repositorio del driver, este solo tiene soporte para el kernel 4.15.x ~ 6.0.x
 
-- Por ende, si es descargada la versión más actual de Raspbian no será posible usar este driver
+Ejecuta el siguiente script de python en el siguiente orden:
 
-## Pasos a seguir
+*Ejemplo de ejecucion de script de python*
+En la siguiente ruta:_RTL8188FTV-Raspbian/Herramienta_de_instalacion/_
 
-* Esta guía tiene como objetivo instalar el driver, pero en casos cuando no es posible conectarla
-usando un cable LAN.
-
-* Debido a que es necesario construir este [driver](https://github.com/kelebek333/rtl8188fu/tree/arm#how-to-install-for-arm-devices),
-se ocupan varios paquetes como lo son:
-
-1. dkms
-
-2. build-essential
-
-3. linux-headers
-
-## Depencias necesarias en la computadora con linux con acceso a internet
-
-- Git
-- Wget
-- python
-
-## 1.En la computadora con internet
-
-1. Se descarga el repositorio con el driver:
-
-```sh
-git clone -b arm https://github.com/kelebek333/rtl8188fu rtl8188fu-arm
+```sh 
+python main.py
 ```
-2. Se descarga este repositorio
+*Recomiendo ejecutar este script en la memoria usb*
 
-```sh
-git clone https://github.com/janc18/RTL8188FTV-Raspbian
-```
-3. Mueve la carpeta rtl18188fu-arm generada por el paso 1 a RLL8188FTV-Raspbian 
+1. Raspberry pi de arquitectura arm
 
-En el directorio donde ejecutaste el paso 1 y 2 ejecutas lo siguiente
+2. Pc con acceso a internet
 
-```sh
-mv rtl18188fu-arm RTL8188FTV-Raspbian
-```
-
-1. Se pasa esta carpeta actual (RTL8188FTV-Raspbian) a una memoria USB
-
-## 2.Proceso a ejecutar en la Raspberry Pi
-
-
-1. Se monta la memoria USB 
-
-2. Ejecutar el instalador en la carpeta del repositorio (RTL8188FTV-Raspbian) 
-
-```sh
-python3.9 Instalador_python.py
-```
-3. Elegir la opcion r o R (opción correspondiente a la Raspberry pi)
-	Se generara un archivo txt automático con las urls de los paquetes 
-
-4. Se desmonta la memoria
-
-
-## 3.Proceso a ejecutar en la computadora linux con acceso a internet
-
-1. Se monta de nuevo la memoria
-
-2. Se navega al repositorio (RTL8188FTV-Raspbian)
-
-3. Ejecutar el instalador
-
-```sh
-python3.9 Instalador_python.py
-```
-
-4. Elegir la opcion p o P (opción correspondiente a la PC)
-	Esto descargara los paquetes necesarios en la carpeta "Descargas_de_paquetes"
-
-5. Se mueven la carpeta rtl8188fu-arm (esta se genero al realizar el paso uno)
-```sh
-mv rtl** Descargas_de_paquetes
-```
-6. Desmontar la memoria
-
-## 4. Instalacion en la Raspberry pi
+## Instalacion del driver 
 
 1. Se monta la memoria en la Raspberry pi
 
-2. Se navega al repositorio (RTL8188FTV-Raspbian)
+2. Se navega al repositorio (RTL8188FTV-Raspbian/Herramienta_de_instalacion)
 
-3. Se mueve el archivo "Instalador.sh" a la carpeta de Descagas_de_paquetes
-
-```sh
-mv Instalador.sh Descagas_de_paquetes
-```
-
-4. Se le da permisos de ejecucion al instalador
+3. Se le da permisos de ejecucion al instalador
 
 ```sh
 chmod +x Instalador.sh
@@ -139,10 +68,3 @@ sudo apt-mark hold raspberrypi-kernel-headers
 ```
 
 ### Si existe cualquier problema no dudes en crear un Issue
-
-Mejoras de script de Python
-
-- Detección automatica de donde se ejecuta el script Raspberry Pi o PC 
-- Verificar si la PC se encuentra con internet
-- Verificar al final si la instalación del driver fue correcta
-- Mostrar con colores un informacion del host siempre que se ejecute
